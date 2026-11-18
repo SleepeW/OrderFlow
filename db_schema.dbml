@@ -1,0 +1,70 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id integer [primary key]
+  username varchar [not null]
+  role user_role [not null]
+  balance integer [default: 0, not null]
+}
+
+enum user_role {
+  ADMIN
+  USER
+}
+
+Table orders {
+  id integer [primary key]
+  user_id integer [not null]
+  created_at timestamp [not null]
+  status order_status [not null]
+  total_price integer [not null, check: `total_price >= 0`]
+}
+
+enum order_status{
+  PENDING_PAYMENT [note: 'ожидает оплаты']
+  PAID [note: 'успешно оплачен']
+  PROCESSING [note: 'готовится к отправке']
+  SHIPPED [note: 'отправлен покупателю']
+  COMPLETED [note: 'заказ завершён']
+  CANCELLED [note: 'заказ отменён']
+  EXPIRED [note: 'срок оплаты истёк']
+}
+
+Table order_items {
+  id integer [primary key]
+  order_id integer [not null]
+  product_id integer [not null]
+  count integer [not null, check: `count >= 0`]
+  unit_price integer [not null, check: `unit_price >= 0`]
+}
+
+Table products {
+  id integer [primary key]
+  owner_user_id integer [not null]
+  name varchar [not null]
+  description varchar
+  price integer [not null, check: `price >= 0`]
+}
+
+Table storages {
+  id integer [primary key]
+  name varchar [not null]
+}
+
+Table storage_items {
+  id integer [primary key]
+  storage_id integer [not null]
+  product_id integer [not null]
+  count integer [not null, check: `count >= 0`]
+  reserv integer [not null, check: `reserve >= 0`]
+}
+
+Ref: users.id < orders.user_id
+Ref: users.id < products.owner_user_id
+Ref: orders.id < order_items.order_id
+Ref: products.id < order_items.product_id
+Ref: products.id < storage_items.product_id
+Ref: storages.id < storage_items.storage_id
+
+
