@@ -55,8 +55,8 @@ The application is planned as a modular monolith with separated business logic, 
 ## Development Roadmap
 
 - [x] Initial database schema design
-- [ ] Set up Spring Boot application
-- [ ] Configure PostgreSQL and Flyway
+- [x] Set up Spring Boot application
+- [x] Configure PostgreSQL and Flyway
 - [ ] Implement user management and authentication
 - [ ] Implement product catalog
 - [ ] Implement warehouse and inventory management
