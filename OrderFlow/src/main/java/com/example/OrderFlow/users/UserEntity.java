@@ -32,13 +32,9 @@ public class UserEntity {
         this.username = username;
     }
 
-    public void changeRole(int role){
-        if(role <= 0 || role >= 3){
-            throw new IllegalArgumentException();
-        }
+    public void roleUser() {this.role = 0;}
 
-        this.role = role;
-    }
+    public void roleAdmin() {this.role = 1;}
 
     public void replenishment(Long sum){
         if(sum <= 0){
